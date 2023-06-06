@@ -1,6 +1,6 @@
-const questions = [
+const questions = [ // Const yapısıyla soruların yazılışı
     {
-        question: "Which is the most popular football club in the world?",
+        question: "Which is the most popular football club in the world?", // Soru ve içerisinde cevapların bulunduğu liste
         answers: [
             { text: "Milan", correct: false },
             { text: "Barcelona", correct: false },
