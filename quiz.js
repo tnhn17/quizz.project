@@ -60,19 +60,76 @@ function showQuestion() {
     questionElement.innerHTML = questionNo + ". " + currentQuestion.question; 
 
     currentQuestion.answers.forEach(answer => { // Döngü aracılığıyla answer'i alıyor
-        const button = document.createElement("button")
+        const button = document.createElement("button");
         button.innerHTML = answer.text; // HTML'e answer'ı ekliyor
         button.classList.add("btn");
         answerButtons.appendChild(button);
+        if (answer.correct) {
+            button.dataset.correct = answer.correct;
+        }
+        button.addEventListener("click", selectAnswer);
     })
 }  
 
 
 function resetState() {
-    nextButton.style.display = "none"
+    nextButton.style.display = "none"; // Normal html sayfasındaki textlerin görünmemesini sağlıyoruz
     while (answerButtons.firstChild) {
-        answerButtons.removeChild(answerButtons.firstChild);
+        answerButtons.removeChild(answerButtons.firstChild); // ilk örneği siliyoruz
     }
 }
+
+function selectAnswer(e) {
+    const selectedBtn = e.target; // kullanıcının tıkladığına yönelir
+    const isCorrect = selectedBtn.dataset.correct === "true";
+    if (isCorrect) {
+        selectedBtn.classList.add("correct"); // Eğer doğruysa ekle
+        score++;
+    } else {
+        selectedBtn.classList.add("incorrect");
+    }
+    Array.from(answerButtons.children).forEach(button => { // children öğeleri diziye dönüştürdük
+        if (button.dataset.correct === "true") {
+            button.classList.add("correct"); // eğer data doğru ise ekledik
+        }
+        button.disabled = true; // buton görünmez oldu
+    });
+    nextButton.style.display = "block"; // bir sonraki düğmeyi ekliyoruz
+}
+
+function showScore() {  // Puan gösteren fonksiyon
+    resetState(); // sürekli puanı sıfırlamış için 
+    questionElement.innerHTML = `You scored ${score} out of ${questions.length}!`; 
+    if (0 <score < questions.length) { // koşullu sonuçları ekrana yazdıran if yapısı
+        questionElement.innerHTML = `You answered ${score} questions correctly!You should work a little more..`;
+    }else if(score == 0){
+        questionElement.innerHTML = `Your score is ${score} :()`;
+    }else {
+        questionElement.innerHTML = `You are amazing!`;
+    }
+    nextButton.innerHTML = "Play Again";
+    nextButton.style.display = "block";
+}
+
+
+
+function handleNextButton() {
+    currentQuestionIndex++;
+    if (currentQuestionIndex < questions.length) { // eğer soru sayısından az ise index soruyu göster
+        showQuestion();
+    } else {
+        showScore(); // Değil ise scoru göster
+    }
+}
+
+
+
+nextButton.addEventListener("click", () => {
+    if (currentQuestionIndex < questions.length) {
+        handleNextButton();
+    } else {
+        startQuiz();
+    }
+})
 
 startQuiz();

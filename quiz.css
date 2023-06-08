@@ -12,7 +12,7 @@ body{
     background: #fff;
     width: 90%;
     max-width: 600px;
-    margin: 100px auto 0;
+    margin: 220px auto 0;
     border-radius: 10px;
     padding: 30px;
 }
@@ -44,10 +44,14 @@ body{
     cursor: pointer;
     transition: all 0.3s;
 }
-.btn:hover{
+.btn:hover:not([disabled]){
     background: #222;
     color: #fff;
 }
+.btn:disabled{
+    cursor: no-drop;
+}
+
 #next-btn{
     background: #001e4d;
     color: #fff;
@@ -66,4 +70,13 @@ body{
     color: #001e4d;
     font-style: oblique;
     border: 1px solid #001e4d;
+}
+
+.correct{
+    background: #008000;
+    color: #fff;
+}
+.incorrect{
+    background-color: #d90429;
+    color: #fff;
 }
