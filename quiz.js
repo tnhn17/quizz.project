@@ -97,21 +97,22 @@ function selectAnswer(e) {
     nextButton.style.display = "block"; // bir sonraki düğmeyi ekliyoruz
 }
 
-function showScore() {  // Puan gösteren fonksiyon
-    resetState(); // sürekli puanı sıfırlamış için 
-    questionElement.innerHTML = `You scored ${score} out of ${questions.length}!`; 
-    if (0 <score < questions.length) { // koşullu sonuçları ekrana yazdıran if yapısı
-        questionElement.innerHTML = `You answered ${score} questions correctly!You should work a little more..`;
-    }else if(score == 0){
-        questionElement.innerHTML = `Your score is ${score} :()`;
-    }else {
-        questionElement.innerHTML = `You are amazing!`;
+function showScore() { // skor gösterge fonksiyonu
+    resetState();
+  
+    if (score > 0 && score < questions.length) { // belirli aralıkların oluşturulması 
+      questionElement.innerHTML = `You answered ${score} questions correctly! You should work a little more.`; 
+    } else if (score === 0) {
+      questionElement.innerHTML = `Your score is ${score} :(`;
+    } else {
+      questionElement.innerHTML = `You are amazing!`;
     }
+  
     nextButton.innerHTML = "Play Again";
     nextButton.style.display = "block";
-}
-
-
+  }
+  
+  
 
 function handleNextButton() {
     currentQuestionIndex++;
